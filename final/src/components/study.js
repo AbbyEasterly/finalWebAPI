@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { useEffect } from "react";
 import { updatePack } from "../actions/packActions";
 import { useDispatch } from "react-redux";
 import { fetchCards } from "../actions/cardActions";
+
 import "./study.css";
 function Study() {
     const navigate = useNavigate();
@@ -16,13 +17,46 @@ function Study() {
     const highScore = selectedPack && (selectedPack.score || selectedPack.highScore || 0);
     console.log('where is','and ',cards); // Debugging log
     const [isFront, setFront] = React.useState(true);
-    
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [direction, setDirection] = useState("next");
+    const [finished, setFinished] = useState(false);
+    const [correct, setCorrect] = useState(0);
     const cardClick = () => {
         setFront((prev) => !prev);
     }
     
+    const correctCard = () => {
+        if (!cards || cards.length === 0) return;
+        setDirection("next");
+        // if we are at last card, finish and show high score
+        if (currentIndex >= cards.length - 1) {
+            setFinished(true);
+            setCorrect((prev) => prev + 1);
+            setFront(true);
+            updateHighScore();
+            return;
+        }
+        setCurrentIndex((prev) => prev + 1);
+        setCorrect((prev) => prev + 1);
+        setFront(true);
+    };
 
-    const correct = 0
+    const wrongCard = () => {
+         if (!cards || cards.length === 0) return;
+        setDirection("next");
+        // if we are at last card, finish and show high score
+        if (currentIndex >= cards.length - 1) {
+            setFinished(true);
+            setFront(true);
+            updateHighScore();
+            return;
+        }
+        setCurrentIndex((prev) => prev + 1);
+        
+        setFront(true);
+    };
+
+    
     const total = cards.length || 0;
     
     const percentage = total > 0 ? (correct / total) * 100 : 0;
@@ -48,30 +82,45 @@ function Study() {
             <p>Selected Pack: {selectedPack ? selectedPack.name : 'Loading...'}</p>
             <p>High Score: {highScore}/{total}</p>
 
-            <div>
-                {cards && cards.length > 0 ? (
-                    cards.map((card, index) => (
-                        <div classname="flip-card" key={card._id} onClick={cardClick} style = {{ width: '50%', margin: '20px auto', padding: '20px', borderRadius: '10px', backgroundColor: '#e1c0f1d2', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }}>
-                            <div className={`flip-card-inner ${isFront ? '' : 'flipped'}`} style = {{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.5rem', color: '#2c1368' }}
-                                    >
-                                <div className="flip-card-front" style = {{ position: 'absolute', backfaceVisibility: 'hidden' }}>
-                                    {card.front}
-                                </div>  
-                                <div className="flip-card-back" style = {{ position: 'absolute', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
-                                    {card.back}
-                                </div>
-                            </div>    
+           
+           <div className = "slider-container" style = {{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
+            {cards && cards.length > 0 ? (
+                <div className={`flip-card ${direction}`} onClick={cardClick} style = {{ width: '300px', height: '200px', cursor: 'pointer' }}>  
+                    <div className={`flip-card-inner ${isFront ? 'flipped' : ''}`}>
+                        <div className="flip-card-front">
+                            <h3 style = {{ color: '#2c1368' }}>{cards[currentIndex].back}</h3>
                         </div>
-
-                    ))
-                ) : (
-                    <p>No cards available in this pack.</p>
-
-                )}
+                        <div className="flip-card-back">
+                            <h3 style = {{ color: '#2c1368' }}>{cards[currentIndex].front}</h3>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <p>No cards available in this pack.</p>
+            )}
             </div>
-            <Button onClick={() => navigate('/home')} style = {{ marginTop: '20px', height: '40px', width: '200px', color: '#fff', cursor: 'pointer' ,backgroundColor: '#6e50c2', borderRadius: '9px', border: 'none' }}>
-                Go to Home
-            </Button>
+
+            {finished ? (
+                <div style={{ textAlign: 'center', marginTop: 20 }}>
+                    <h3>Finished!</h3>
+                    <p style={{ fontSize: '1.25rem' }}>Your score: {Math.round(percentage)}%</p>
+                    <p style={{ fontSize: '1.1rem' }}>High Score: {Math.round((newHighScore / total) * 100)}%</p>
+                    <div style={{ marginTop: 12 }}>
+                        <Button onClick={() => { setFinished(false); setCurrentIndex(0); setFront(true); setCorrect(0); }} style={{ marginRight: 8 }}>Restart</Button>
+                        <Button onClick={() => { updateHighScore(); navigate('/home'); }} style={{ marginRight: 8 }}>Back to Home</Button>
+                    </div>
+                </div>
+            ) : (
+                <div style = {{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                    <Button onClick={wrongCard} style={{ marginRight: '10px', height: '40px', width: '100px', cursor: 'pointer', color: '#fff', backgroundColor: '#3d49a9', borderRadius: '9px', border: 'none'  }}>
+                        Wrong
+                    </Button>
+                    <Button onClick={correctCard} style={{ marginLeft: '10px', height: '40px', width: '100px', cursor: 'pointer', color: '#fff', backgroundColor: '#3d49a9', borderRadius: '9px', border: 'none'  }}>
+                        Correct
+                    </Button>
+                </div>
+            )}
+
         </div>
     );
 }

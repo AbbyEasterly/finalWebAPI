@@ -30,7 +30,7 @@ function Home() {
 
     return (
 
-        <div className="home-container" style = {{ paddingLeft: 40, paddingRight: 40 }}>
+        <div className="home-container" style = {{ paddingLeft: 40, paddingRight: 40, maxHeight: '100vh' }}>
             <h1 className="text-center" style={{ color: '#2c1368', fontSize: '3rem' }}>Welcome to Flashcards!</h1>
             <h2 className="mb-3" style= {{ color: '#232f91', fontSize: '2rem'}}>Your Packs</h2>
             <p style= {{ color: '#000000', fontSize: '1rem', marginBottom: '20px', marginTop: '-15px'  }}>Click on a pack to view its cards or create a new pack to get started!</p>
@@ -40,7 +40,7 @@ function Home() {
                     <div className="container">
                       <div className="row" style = {{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
                         {packs.map((pack) => (
-                            <div key={pack._id} className="col-12 col-sm-6 col-md-4 mb-3" style = {{ display: 'flex', margin: 20, width: '300px', height: '300px' }}>
+                            <div key={pack._id} className="col-12 col-sm-6 col-md-4 mb-3" style = {{ padding: 20, display: 'flex', margin: 20, width: '300px', height: '300px' }}>
                             <div className="card" style = {{ width: '90%', backgroundColor: '#e1c0f1d2', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                                 <div className="card-body" style = {{   display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}  >
                                     <h5 style = {{ display: 'flex', justifyContent: 'center', fontSize: '1.5rem', color: '#2c1368' }} className="card-title">

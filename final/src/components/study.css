@@ -28,7 +28,7 @@
   justify-content: center;
   font-family: Arial, sans-serif;
   font-size: 1.2rem;
-  border: 2px solid #333;
+  border: 1px solid #333;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -39,7 +39,58 @@
 }
 
 .flip-card-back {
-  background-color: #4caf50;
+  background-color: #e1c0f1d2;
   color: "#9c50c2";
   transform: rotateY(180deg);
+}
+
+.slider-container {
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.card.next {
+  animation: slideInFromRight 0.4s ease;
+}
+
+.card.prev {
+  animation: slideInFromLeft 0.4s ease;
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.buttons {
+  margin-top: 15px;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
 }
