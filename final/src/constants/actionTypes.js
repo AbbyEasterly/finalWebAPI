@@ -1,0 +1,12 @@
+const Constants = {
+    USER_LOGGEDIN: 'USER_LOGGEDIN',
+    USER_LOGOUT: 'USER_LOGOUT',
+    FETCH_PACKS: 'FETCH_PACKS',
+    SET_PACKS: 'SET_PACKS',
+    FETCH_PACK: 'FETCH_PACK',
+    SET_PACK: 'SET_PACK',
+    FETCH_CARDS: 'FETCH_CARDS',
+    SET_CARDS: 'SET_CARDS'
+}
+
+export default Constants;
