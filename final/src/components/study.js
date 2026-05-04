@@ -76,11 +76,11 @@ function Study() {
         }
     };
     return (
-        <div>
-            <h2>Study Page</h2>
-            <p>Study your flashcards here!</p>
-            <p>Selected Pack: {selectedPack ? selectedPack.name : 'Loading...'}</p>
-            <p>High Score: {highScore}/{total}</p>
+        <div style = {{ padding: '40px' }}>
+            <h2 style={{ color: '#232f91', fontSize: '2rem' }}>Study Page</h2>
+           
+            <p  style = {{ marginBottom: '20px', color: '#555', display: 'flex', fontSize: '1.25rem' }}>Selected Pack: {selectedPack ? selectedPack.name : 'Loading...'}</p>
+            <p style = {{ marginBottom: '20px', color: '#000', display: 'flex', fontSize: '1.25rem'  }}>High Score: {highScore}/{total}</p>
 
            
            <div className = "slider-container" style = {{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px' }}>
