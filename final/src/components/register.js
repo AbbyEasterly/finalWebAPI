@@ -56,7 +56,7 @@ function Register() {
                     Register
                 </Button>
             </Form>
-            <p2 style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>Already have an account? <a href="/login" style={{ color: '#007bff' }}>Login here</a>.</p2>
+            
             </div>
             </card>
         </div>

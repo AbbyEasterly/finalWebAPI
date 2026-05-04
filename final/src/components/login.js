@@ -64,7 +64,7 @@ function Login() {
         </Button>
         
       </Form>
-      <p2 style={{ marginTop: '20px', fontSize: '14px', color: '#555' }}>Don't have an account? <a href="/register" style={{ color: '#007bff' }}>Register here</a>.</p2>
+     
       
       </div>
       </card>
